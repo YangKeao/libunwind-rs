@@ -6,7 +6,7 @@
 //! [libunwind]: http://www.nongnu.org/libunwind/
 extern crate num_derive;
 
-use libunwind_sys::*;
+use another_libunwind_sys::*;
 use std::fmt;
 use std::ffi::CStr;
 use foreign_types::{foreign_type, ForeignType};
@@ -81,7 +81,7 @@ pub enum Byteorder {
 foreign_type! {
 /// Struct represents an address space of unwinding procces
     pub unsafe type AddressSpace  {
-        type CType = libunwind_sys::unw_addr_space;
+        type CType = another_libunwind_sys::unw_addr_space;
         fn drop = unw_destroy_addr_space;
     }
 }
@@ -111,7 +111,7 @@ impl AddressSpace {
 foreign_type! {
     ///This state is used by accessors
     pub unsafe type CoredumpState {
-        type CType = libunwind_sys::UCD_info;
+        type CType = another_libunwind_sys::UCD_info;
         fn drop = _UCD_destroy;
     }
 }
@@ -349,7 +349,7 @@ impl Cursor {
     pub fn ip(&mut self) ->  Result<usize, Error> {
         unsafe {
             let mut value = 0;
-            let ret = unw_get_reg(&self.0 as *const _ as *mut _, libunwind_sys::UNW_TDEP_IP as i32, &mut value);
+            let ret = unw_get_reg(&self.0 as *const _ as *mut _, another_libunwind_sys::UNW_TDEP_IP as i32, &mut value);
             if ret == (Error::Succsess as i32) {
                 Ok(value as usize)
             } else {
@@ -362,7 +362,7 @@ impl Cursor {
     pub fn sp(&mut self) ->  Result<usize, Error> {
         unsafe {
             let mut value = 0;
-            let ret = unw_get_reg(&self.0 as *const _ as *mut _, libunwind_sys::UNW_TDEP_SP as i32, &mut value);
+            let ret = unw_get_reg(&self.0 as *const _ as *mut _, another_libunwind_sys::UNW_TDEP_SP as i32, &mut value);
             if ret == (Error::Succsess as i32) {
                 Ok(value as usize)
             } else {
