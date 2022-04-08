@@ -13,6 +13,7 @@ exclude = ["/data"]
 
 [features]
 ptrace = ["another-libunwind-sys/ptrace"]
+static = ["another-libunwind-sys/static"]
 
 [dependencies]
 libc = "0.2.66"
